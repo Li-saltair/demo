@@ -1,0 +1,73 @@
+<!DOCTYPE>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <style>
+            *{
+                margin:0;
+                padding:0;
+                box-sizing: border-box;
+            }
+        button{
+            display:block;
+            width:100px;
+            height:30px;
+            line-height:30px;
+            background:#66BAB7;
+            color:#fff;
+            text-align:center;
+            border-radius:4px;
+            margin:20px auto;
+            border:0;
+            font-size:16px;
+        }
+        li{
+            list-style: none;
+            width:98%;
+            height:40px;
+            line-height:40px;
+            margin:10px auto;
+            padding:0 6px;
+            border-radius: 4px;
+            background:#A8D8B9;
+            color:#333;
+            font-size:16px;
+        }
+        </style>
+    </head>
+    <body>
+        <ul id="ct">
+            <li>总结了日式网站这4个优点后，我能把中文网站做得高大上了！</li>
+            <li>在配色这件事情上，总会有一些有趣且有用的小技巧</li>
+            <li>如何制造信赖感和惊喜感？我总结了这些设计方法</li>
+        </ul>
+        <button>获取新闻</button>
+    </body>
+    <script>
+        /*CORS是Ajax的一种情况，是给一个响应头让浏览器执行跨域请求的行为，重点就是响应头的设置*/
+        var btn =document.querySelector("button");
+        var ct =document.querySelector('#ct');
+        var pageIndex = 0;
+
+        btn.addEventListener("click",function(){
+            var xhr = new XMLHttpRequest();
+            xhr.open("get","http://a.jrg.com:8080/getNews",true);
+            xhr.send();
+            xhr.onreadystatechange = function(){
+                if(xhr.readyState === 4 && xhr.status ===200 || xhr.status === 304){
+                    show(JSON.parse(xhr.responseText));
+                }
+            }
+        })
+        function show(news){
+            var content = "";
+            for(var i = 0; i<news.length; i++){
+                content += '<li>' + news[i] + '</li>';
+            }
+            ct.innerHTML = content;
+        }
+        
+
+    </script>
+</html>
